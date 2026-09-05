@@ -1,6 +1,6 @@
 --==================================================
 -- Undercover Slotted - Loader System v3.1
--- Free & Paid Key Support - Final
+-- HARDCODED KEYS - Premium & Free Support
 --==================================================
 
 -- SERVICES
@@ -9,6 +9,117 @@ local UIS = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
+
+-- ================= HARDCODED PREMIUM KEYS =================
+-- All 100 premium keys
+local VALID_KEYS = {
+    "550E8400-E29B-41D4-A716-446655440001",
+    "550E8400-E29B-41D4-A716-446655440002",
+    "550E8400-E29B-41D4-A716-446655440003",
+    "550E8400-E29B-41D4-A716-446655440004",
+    "550E8400-E29B-41D4-A716-446655440005",
+    "550E8400-E29B-41D4-A716-446655440006",
+    "550E8400-E29B-41D4-A716-446655440007",
+    "550E8400-E29B-41D4-A716-446655440008",
+    "550E8400-E29B-41D4-A716-446655440010",
+    "550E8400-E29B-41D4-A716-446655440011",
+    "550E8400-E29B-41D4-A716-446655440012",
+    "550E8400-E29B-41D4-A716-446655440013",
+    "550E8400-E29B-41D4-A716-446655440014",
+    "550E8400-E29B-41D4-A716-446655440015",
+    "550E8400-E29B-41D4-A716-446655440016",
+    "550E8400-E29B-41D4-A716-446655440017",
+    "550E8400-E29B-41D4-A716-446655440018",
+    "550E8400-E29B-41D4-A716-446655440019",
+    "550E8400-E29B-41D4-A716-446655440020",
+    "550E8400-E29B-41D4-A716-446655440021",
+    "550E8400-E29B-41D4-A716-446655440022",
+    "550E8400-E29B-41D4-A716-446655440023",
+    "550E8400-E29B-41D4-A716-446655440024",
+    "550E8400-E29B-41D4-A716-446655440025",
+    "550E8400-E29B-41D4-A716-446655440026",
+    "550E8400-E29B-41D4-A716-446655440027",
+    "550E8400-E29B-41D4-A716-446655440028",
+    "550E8400-E29B-41D4-A716-446655440029",
+    "550E8400-E29B-41D4-A716-446655440030",
+    "550E8400-E29B-41D4-A716-446655440031",
+    "550E8400-E29B-41D4-A716-446655440032",
+    "550E8400-E29B-41D4-A716-446655440033",
+    "550E8400-E29B-41D4-A716-446655440034",
+    "550E8400-E29B-41D4-A716-446655440035",
+    "550E8400-E29B-41D4-A716-446655440036",
+    "550E8400-E29B-41D4-A716-446655440037",
+    "550E8400-E29B-41D4-A716-446655440038",
+    "550E8400-E29B-41D4-A716-446655440039",
+    "550E8400-E29B-41D4-A716-446655440040",
+    "550E8400-E29B-41D4-A716-446655440041",
+    "550E8400-E29B-41D4-A716-446655440042",
+    "550E8400-E29B-41D4-A716-446655440043",
+    "550E8400-E29B-41D4-A716-446655440044",
+    "550E8400-E29B-41D4-A716-446655440045",
+    "550E8400-E29B-41D4-A716-446655440046",
+    "550E8400-E29B-41D4-A716-446655440047",
+    "550E8400-E29B-41D4-A716-446655440048",
+    "550E8400-E29B-41D4-A716-446655440049",
+    "550E8400-E29B-41D4-A716-446655440050",
+    "550E8400-E29B-41D4-A716-446655440051",
+    "550E8400-E29B-41D4-A716-446655440052",
+    "550E8400-E29B-41D4-A716-446655440053",
+    "550E8400-E29B-41D4-A716-446655440054",
+    "550E8400-E29B-41D4-A716-446655440055",
+    "550E8400-E29B-41D4-A716-446655440056",
+    "550E8400-E29B-41D4-A716-446655440057",
+    "550E8400-E29B-41D4-A716-446655440058",
+    "550E8400-E29B-41D4-A716-446655440059",
+    "550E8400-E29B-41D4-A716-446655440060",
+    "550E8400-E29B-41D4-A716-446655440061",
+    "550E8400-E29B-41D4-A716-446655440062",
+    "550E8400-E29B-41D4-A716-446655440063",
+    "550E8400-E29B-41D4-A716-446655440064",
+    "550E8400-E29B-41D4-A716-446655440065",
+    "550E8400-E29B-41D4-A716-446655440066",
+    "550E8400-E29B-41D4-A716-446655440067",
+    "550E8400-E29B-41D4-A716-446655440068",
+    "550E8400-E29B-41D4-A716-446655440069",
+    "550E8400-E29B-41D4-A716-446655440070",
+    "550E8400-E29B-41D4-A716-446655440071",
+    "550E8400-E29B-41D4-A716-446655440072",
+    "550E8400-E29B-41D4-A716-446655440073",
+    "550E8400-E29B-41D4-A716-446655440074",
+    "550E8400-E29B-41D4-A716-446655440075",
+    "550E8400-E29B-41D4-A716-446655440076",
+    "550E8400-E29B-41D4-A716-446655440077",
+    "550E8400-E29B-41D4-A716-446655440078",
+    "550E8400-E29B-41D4-A716-446655440079",
+    "550E8400-E29B-41D4-A716-446655440080",
+    "550E8400-E29B-41D4-A716-446655440081",
+    "550E8400-E29B-41D4-A716-446655440082",
+    "550E8400-E29B-41D4-A716-446655440083",
+    "550E8400-E29B-41D4-A716-446655440084",
+    "550E8400-E29B-41D4-A716-446655440085",
+    "550E8400-E29B-41D4-A716-446655440086",
+    "550E8400-E29B-41D4-A716-446655440087",
+    "550E8400-E29B-41D4-A716-446655440088",
+    "550E8400-E29B-41D4-A716-446655440089",
+    "550E8400-E29B-41D4-A716-446655440090",
+    "550E8400-E29B-41D4-A716-446655440091",
+    "550E8400-E29B-41D4-A716-446655440092",
+    "550E8400-E29B-41D4-A716-446655440093",
+    "550E8400-E29B-41D4-A716-446655440094",
+    "550E8400-E29B-41D4-A716-446655440095",
+    "550E8400-E29B-41D4-A716-446655440096",
+    "550E8400-E29B-41D4-A716-446655440097",
+    "550E8400-E29B-41D4-A716-446655440098",
+    "550E8400-E29B-41D4-A716-446655440099",
+    "550E8400-E29B-41D4-A716-446655440100"
+}
+
+-- ================= ASSIGNED KEYS (Specific users) =================
+-- These users have specific keys assigned to them
+local ASSIGNED_KEYS = {
+    ["BotosMertBanVolt"] = "550E8400-E29B-41D4-A716-446655440009",
+    -- Add more users here if needed
+}
 
 -- ================= COLOR SCHEME =================
 local COLORS = {
@@ -125,7 +236,7 @@ local keySubLabel = Instance.new("TextLabel", keyContent)
 keySubLabel.Size = UDim2.new(1, 0, 0, 16)
 keySubLabel.Position = UDim2.new(0, 0, 0, 26)
 keySubLabel.BackgroundTransparency = 1
-keySubLabel.Text = "Enter your product key to continue"
+keySubLabel.Text = "Enter 'free' for free version or your premium key"
 keySubLabel.Font = Enum.Font.Gotham
 keySubLabel.TextSize = 9
 keySubLabel.TextColor3 = COLORS.TextMuted
@@ -224,22 +335,27 @@ keyCloseBtn.MouseLeave:Connect(function()
 end)
 
 -- ================= KEY VALIDATION =================
-local enteredKey = nil
-
--- PAID KEY DEFINITION
-local PAID_KEY = "550E8400-E29B-41D4-A716-446655440000"
-
 local function ValidateKey(inputKey)
-    -- Trim whitespace and normalize
     local trimmedKey = inputKey:gsub("^%s+", ""):gsub("%s+$", "")
     
     -- Check for free key (case insensitive)
     if trimmedKey:lower() == "free" then
         return true, "free"
-    -- Check for paid key (exact match required)
-    elseif trimmedKey == PAID_KEY then
+    end
+    
+    -- Check for BotosMertBanVolt's assigned key
+    local playerName = LocalPlayer.Name
+    if ASSIGNED_KEYS[playerName] and trimmedKey == ASSIGNED_KEYS[playerName] then
         return true, "paid"
     end
+    
+    -- Check against valid keys list
+    for _, validKey in ipairs(VALID_KEYS) do
+        if trimmedKey == validKey then
+            return true, "paid"
+        end
+    end
+    
     return false, nil
 end
 
@@ -552,7 +668,8 @@ changelogContent.BackgroundTransparency = 1
 changelogContent.Text = [[
 v2.0
   • Loader UI updated
-  • Updated Paid Menu
+  • 100 Premium Keys Added
+  • BotosMertBanVolt has key: 550E8400-E29B-41D4-A716-446655440009
 
 v1.0 - Initial Release
   • Released Loader for Free and Ultimate
@@ -854,7 +971,7 @@ keyUnlockBtn.MouseButton1Click:Connect(function()
             loaderStatus.Text = "● Free Mode"
             loaderStatus.TextColor3 = COLORS.TextMuted
         else -- "paid"
-            keyStatusText.Text = "Paid Key"
+            keyStatusText.Text = "Premium Key"
             keyStatusText.TextColor3 = COLORS.Gold
             ultimateButton.Visible = true
             freeButton.Position = UDim2.new(0, 0, 0, 178)
@@ -871,7 +988,7 @@ keyUnlockBtn.MouseButton1Click:Connect(function()
             Position = UDim2.new(0.5, -320, 0.5, -190)
         }):Play()
     else
-        ShowKeyError("Invalid key! Use 'free' or the paid key.")
+        ShowKeyError("Invalid key! Use 'free' or a valid premium key.")
     end
 end)
 
