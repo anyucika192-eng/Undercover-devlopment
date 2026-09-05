@@ -670,11 +670,11 @@ local keyType = "free"
 
 -- ================= LOAD FUNCTIONS =================
 local function LoadFreeScript()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/anyucika192-eng/Undercover-devlopment/refs/heads/main/Free%20uc.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/anyucika192-eng/Undercover-devlopment/refs/heads/main/Free%20uc.lua?token=GHSAT0AAAAAAEIBVJCRHO44XOTTU7U4LHFW2U4NELQ"))()
 end
 
 local function LoadPaidScript()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/anyucika192-eng/Undercover-devlopment/refs/heads/main/Uc%20Ult.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/anyucika192-eng/Undercover-devlopment/refs/heads/main/Uc%20Ult.lua?token=GHSAT0AAAAAAEIBVJCQRQCDRULHXMCL6VTK2U4NEGQ"))()
 end
 
 -- ================= LOAD BUTTON ACTION =================
