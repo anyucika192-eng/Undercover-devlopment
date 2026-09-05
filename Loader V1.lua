@@ -1,6 +1,6 @@
 --==================================================
--- Undercover Slotted - Loader System v2.6
--- Exit Button Next to Load
+-- Undercover Slotted - Loader System v3.1
+-- Free & Paid Key Support - Final
 --==================================================
 
 -- SERVICES
@@ -32,6 +32,7 @@ local COLORS = {
     ButtonHover = Color3.fromRGB(45, 45, 52),
     Locked = Color3.fromRGB(60, 60, 70),
     Unavailable = Color3.fromRGB(40, 30, 30),
+    Gold = Color3.fromRGB(255, 215, 0),
 }
 
 -- ================= REMOVE OLD UI =================
@@ -88,7 +89,7 @@ keyTitleLine.BackgroundTransparency = 0.3
 local keyTitleText = Instance.new("TextLabel", keyTitleBar)
 keyTitleText.Size = UDim2.new(1, 0, 1, 0)
 keyTitleText.BackgroundTransparency = 1
-keyTitleText.Text = "UNDERCOVER SLOTTED"
+keyTitleText.Text = "Loader"
 keyTitleText.Font = Enum.Font.GothamBold
 keyTitleText.TextSize = 13
 keyTitleText.TextColor3 = COLORS.Text
@@ -124,7 +125,7 @@ local keySubLabel = Instance.new("TextLabel", keyContent)
 keySubLabel.Size = UDim2.new(1, 0, 0, 16)
 keySubLabel.Position = UDim2.new(0, 0, 0, 26)
 keySubLabel.BackgroundTransparency = 1
-keySubLabel.Text = "Enter 'free' as the key to continue"
+keySubLabel.Text = "Enter your product key to continue"
 keySubLabel.Font = Enum.Font.Gotham
 keySubLabel.TextSize = 9
 keySubLabel.TextColor3 = COLORS.TextMuted
@@ -223,8 +224,16 @@ keyCloseBtn.MouseLeave:Connect(function()
 end)
 
 -- ================= KEY VALIDATION =================
+local enteredKey = nil
+
 local function ValidateKey(inputKey)
-    return inputKey:lower() == "free"
+    local lower = inputKey:lower()
+    if lower == "free" then
+        return true, "free"
+    elseif lower == "paid" then
+        return true, "paid"
+    end
+    return false, nil
 end
 
 local function ShowKeyError(text)
@@ -293,7 +302,7 @@ local loaderTitleText = Instance.new("TextLabel", loaderTitleBar)
 loaderTitleText.Size = UDim2.new(0, 180, 1, 0)
 loaderTitleText.Position = UDim2.new(0, 16, 0, 0)
 loaderTitleText.BackgroundTransparency = 1
-loaderTitleText.Text = "UNDERCOVER SLOTTED"
+loaderTitleText.Text = "Loader"
 loaderTitleText.Font = Enum.Font.GothamBlack
 loaderTitleText.TextSize = 14
 loaderTitleText.TextColor3 = COLORS.Text
@@ -304,13 +313,13 @@ local loaderSubTitle = Instance.new("TextLabel", loaderTitleBar)
 loaderSubTitle.Size = UDim2.new(0, 120, 0, 14)
 loaderSubTitle.Position = UDim2.new(0, 16, 0, 28)
 loaderSubTitle.BackgroundTransparency = 1
-loaderSubTitle.Text = "v2.0 • Select Version"
+loaderSubTitle.Text = "v2.0 Select Version"
 loaderSubTitle.Font = Enum.Font.Gotham
 loaderSubTitle.TextSize = 9
 loaderSubTitle.TextColor3 = COLORS.TextMuted
 loaderSubTitle.TextXAlignment = Enum.TextXAlignment.Left
 
--- Right: Changelog
+-- Right: Discord
 local changelogText = Instance.new("TextLabel", loaderTitleBar)
 changelogText.Size = UDim2.new(0, 160, 1, 0)
 changelogText.Position = UDim2.new(1, -176, 0, 0)
@@ -378,19 +387,19 @@ loaderStatus.TextSize = 10
 loaderStatus.TextColor3 = COLORS.TextMuted
 loaderStatus.TextXAlignment = Enum.TextXAlignment.Center
 
--- ================= "Free Key" TEXT (NEVER CHANGES) =================
-local freeKeyText = Instance.new("TextLabel", leftSide)
-freeKeyText.Size = UDim2.new(1, 0, 0, 20)
-freeKeyText.Position = UDim2.new(0, 0, 0, 152)
-freeKeyText.BackgroundTransparency = 1
-freeKeyText.Text = "Free Key Applied"
-freeKeyText.Font = Enum.Font.GothamBold
-freeKeyText.TextSize = 11
-freeKeyText.TextColor3 = COLORS.Accent
-freeKeyText.TextXAlignment = Enum.TextXAlignment.Center
-freeKeyText.TextTransparency = 0
+-- ================= KEY STATUS TEXT =================
+local keyStatusText = Instance.new("TextLabel", leftSide)
+keyStatusText.Size = UDim2.new(1, 0, 0, 20)
+keyStatusText.Position = UDim2.new(0, 0, 0, 152)
+keyStatusText.BackgroundTransparency = 1
+keyStatusText.Text = "Free Key"
+keyStatusText.Font = Enum.Font.GothamBold
+keyStatusText.TextSize = 11
+keyStatusText.TextColor3 = COLORS.Accent
+keyStatusText.TextXAlignment = Enum.TextXAlignment.Center
+keyStatusText.TextTransparency = 0
 
--- ================= FREE BUTTON (Auto-selects) =================
+-- ================= FREE BUTTON =================
 local freeButton = Instance.new("TextButton", leftSide)
 freeButton.Size = UDim2.new(1, 0, 0, 44)
 freeButton.Position = UDim2.new(0, 0, 0, 178)
@@ -406,18 +415,9 @@ freeBorder.Color = COLORS.BorderLight
 freeBorder.Thickness = 1
 freeBorder.Transparency = 0.3
 
-local freeIcon = Instance.new("TextLabel", freeButton)
-freeIcon.Size = UDim2.new(0, 22, 0, 22)
-freeIcon.Position = UDim2.new(0, 10, 0.5, -11)
-freeIcon.BackgroundTransparency = 1
-freeIcon.Text = ""
-freeIcon.Font = Enum.Font.Gotham
-freeIcon.TextSize = 14
-freeIcon.TextXAlignment = Enum.TextXAlignment.Center
-
 local freeLabel = Instance.new("TextLabel", freeButton)
-freeLabel.Size = UDim2.new(1, -50, 0, 18)
-freeLabel.Position = UDim2.new(0, 40, 0, 5)
+freeLabel.Size = UDim2.new(1, -20, 0, 18)
+freeLabel.Position = UDim2.new(0, 12, 0, 5)
 freeLabel.BackgroundTransparency = 1
 freeLabel.Text = "Free Menu"
 freeLabel.Font = Enum.Font.GothamBold
@@ -426,8 +426,8 @@ freeLabel.TextColor3 = COLORS.Text
 freeLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 local freeSub = Instance.new("TextLabel", freeButton)
-freeSub.Size = UDim2.new(1, -50, 0, 14)
-freeSub.Position = UDim2.new(0, 40, 0, 24)
+freeSub.Size = UDim2.new(1, -20, 0, 14)
+freeSub.Position = UDim2.new(0, 12, 0, 24)
 freeSub.BackgroundTransparency = 1
 freeSub.Text = "Basic features"
 freeSub.Font = Enum.Font.Gotham
@@ -446,7 +446,7 @@ freeCheck.TextColor3 = COLORS.Success
 freeCheck.TextXAlignment = Enum.TextXAlignment.Center
 freeCheck.Visible = false
 
--- ================= ULTIMATE BUTTON (Locked) =================
+-- ================= ULTIMATE BUTTON =================
 local ultimateButton = Instance.new("TextButton", leftSide)
 ultimateButton.Size = UDim2.new(1, 0, 0, 44)
 ultimateButton.Position = UDim2.new(0, 0, 0, 228)
@@ -454,6 +454,7 @@ ultimateButton.BackgroundColor3 = COLORS.Card
 ultimateButton.BorderSizePixel = 0
 ultimateButton.Text = ""
 ultimateButton.AutoButtonColor = false
+ultimateButton.Visible = false
 local ultimateCorner = Instance.new("UICorner", ultimateButton)
 ultimateCorner.CornerRadius = UDim.new(0, 6)
 
@@ -462,19 +463,9 @@ ultimateBorder.Color = COLORS.BorderLight
 ultimateBorder.Thickness = 1
 ultimateBorder.Transparency = 0.3
 
-local ultimateIcon = Instance.new("TextLabel", ultimateButton)
-ultimateIcon.Size = UDim2.new(0, 22, 0, 22)
-ultimateIcon.Position = UDim2.new(0, 10, 0.5, -11)
-ultimateIcon.BackgroundTransparency = 1
-ultimateIcon.Text = ""
-ultimateIcon.Font = Enum.Font.Gotham
-ultimateIcon.TextSize = 14
-ultimateIcon.TextXAlignment = Enum.TextXAlignment.Center
-ultimateIcon.TextColor3 = Color3.fromRGB(150, 150, 150)
-
 local ultimateLabel = Instance.new("TextLabel", ultimateButton)
-ultimateLabel.Size = UDim2.new(1, -50, 0, 18)
-ultimateLabel.Position = UDim2.new(0, 40, 0, 5)
+ultimateLabel.Size = UDim2.new(1, -20, 0, 18)
+ultimateLabel.Position = UDim2.new(0, 12, 0, 5)
 ultimateLabel.BackgroundTransparency = 1
 ultimateLabel.Text = "Ultimate Menu"
 ultimateLabel.Font = Enum.Font.GothamBold
@@ -483,24 +474,25 @@ ultimateLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
 ultimateLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 local ultimateSub = Instance.new("TextLabel", ultimateButton)
-ultimateSub.Size = UDim2.new(1, -50, 0, 14)
-ultimateSub.Position = UDim2.new(0, 40, 0, 24)
+ultimateSub.Size = UDim2.new(1, -20, 0, 14)
+ultimateSub.Position = UDim2.new(0, 12, 0, 24)
 ultimateSub.BackgroundTransparency = 1
-ultimateSub.Text = " Premium"
+ultimateSub.Text = "Premium"
 ultimateSub.Font = Enum.Font.Gotham
 ultimateSub.TextSize = 9
 ultimateSub.TextColor3 = Color3.fromRGB(120, 80, 80)
 ultimateSub.TextXAlignment = Enum.TextXAlignment.Left
 
-local ultimateLock = Instance.new("TextLabel", ultimateButton)
-ultimateLock.Size = UDim2.new(0, 20, 0, 20)
-ultimateLock.Position = UDim2.new(1, -28, 0.5, -10)
-ultimateLock.BackgroundTransparency = 1
-ultimateLock.Text = ""
-ultimateLock.Font = Enum.Font.Gotham
-ultimateLock.TextSize = 12
-ultimateLock.TextColor3 = Color3.fromRGB(150, 100, 100)
-ultimateLock.TextXAlignment = Enum.TextXAlignment.Center
+local ultimateCheck = Instance.new("TextLabel", ultimateButton)
+ultimateCheck.Size = UDim2.new(0, 20, 0, 20)
+ultimateCheck.Position = UDim2.new(1, -28, 0.5, -10)
+ultimateCheck.BackgroundTransparency = 1
+ultimateCheck.Text = ""
+ultimateCheck.Font = Enum.Font.Gotham
+ultimateCheck.TextSize = 14
+ultimateCheck.TextColor3 = COLORS.Gold
+ultimateCheck.TextXAlignment = Enum.TextXAlignment.Center
+ultimateCheck.Visible = false
 
 -- ================= RIGHT SIDE - CHANGELOG AREA =================
 local rightSide = Instance.new("Frame", loaderContent)
@@ -521,7 +513,7 @@ local changelogTitle = Instance.new("TextLabel", rightSide)
 changelogTitle.Size = UDim2.new(1, -24, 0, 28)
 changelogTitle.Position = UDim2.new(0, 12, 0, 8)
 changelogTitle.BackgroundTransparency = 1
-changelogTitle.Text = "📋 CHANGELOG"
+changelogTitle.Text = "CHANGELOG"
 changelogTitle.Font = Enum.Font.GothamBold
 changelogTitle.TextSize = 12
 changelogTitle.TextColor3 = COLORS.Text
@@ -551,11 +543,15 @@ changelogContent.Size = UDim2.new(1, -12, 0, 200)
 changelogContent.Position = UDim2.new(0, 0, 0, 0)
 changelogContent.BackgroundTransparency = 1
 changelogContent.Text = [[
+v2.0
+  • Loader UI updated
+  • Updated Paid Menu
+
 v1.0 - Initial Release
-  • Relased Loader for Free and Ultimate
-  
+  • Released Loader for Free and Ultimate
+
 📌 Next Update:
-  • Ultimate Menu Relase
+  • Ultimate Menu Features
   • More ESP Options
 ]]
 changelogContent.Font = Enum.Font.Gotham
@@ -642,14 +638,12 @@ end)
 
 -- Exit Button Click
 exitButton.MouseButton1Click:Connect(function()
-    -- Flash red on click
     TweenService:Create(exitButton, TweenInfo.new(0.1), {
         BackgroundColor3 = Color3.fromRGB(255, 0, 0)
     }):Play()
     
     task.wait(0.1)
     
-    -- Close everything
     TweenService:Create(loaderWindow, TweenInfo.new(0.3), {
         Size = UDim2.new(0, 0, 0, 0),
         Position = UDim2.new(0.5, 0, 0.5, 0)
@@ -658,7 +652,6 @@ exitButton.MouseButton1Click:Connect(function()
     task.wait(0.3)
     loaderWindow.Visible = false
     
-    -- Also close key window if visible
     if keyWindow.Visible then
         TweenService:Create(keyWindow, TweenInfo.new(0.3), {
             Size = UDim2.new(0, 0, 0, 0),
@@ -668,14 +661,61 @@ exitButton.MouseButton1Click:Connect(function()
         keyWindow.Visible = false
     end
     
-    -- Destroy GUI
     gui:Destroy()
 end)
 
 -- ================= SELECTION STATE =================
 local selectedVersion = nil
+local keyType = "free"
 
--- Free Button Click (Auto-selects)
+-- ================= LOAD FUNCTIONS =================
+local function LoadFreeScript()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/anyucika192-eng/Undercover-devlopment/refs/heads/main/Free%20uc.lua"))()
+end
+
+local function LoadPaidScript()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/anyucika192-eng/Undercover-devlopment/refs/heads/main/Uc%20Ult.lua"))()
+end
+
+-- ================= LOAD BUTTON ACTION =================
+loadButton.MouseButton1Click:Connect(function()
+    if selectedVersion == "free" then
+        TweenService:Create(loaderWindow, TweenInfo.new(0.3), {
+            Size = UDim2.new(0, 0, 0, 0),
+            Position = UDim2.new(0.5, 0, 0.5, 0)
+        }):Play()
+        
+        task.wait(0.3)
+        loaderWindow.Visible = false
+        
+        LoadFreeScript()
+    elseif selectedVersion == "ultimate" then
+        TweenService:Create(loaderWindow, TweenInfo.new(0.3), {
+            Size = UDim2.new(0, 0, 0, 0),
+            Position = UDim2.new(0.5, 0, 0.5, 0)
+        }):Play()
+        
+        task.wait(0.3)
+        loaderWindow.Visible = false
+        
+        LoadPaidScript()
+    else
+        -- Shake animation
+        TweenService:Create(loadButton, TweenInfo.new(0.05), {
+            Position = UDim2.new(0, 10, 0, 0)
+        }):Play()
+        task.wait(0.05)
+        TweenService:Create(loadButton, TweenInfo.new(0.05), {
+            Position = UDim2.new(0, -10, 0, 0)
+        }):Play()
+        task.wait(0.05)
+        TweenService:Create(loadButton, TweenInfo.new(0.05), {
+            Position = UDim2.new(0, 0, 0, 0)
+        }):Play()
+    end
+end)
+
+-- ================= FREE BUTTON CLICK =================
 freeButton.MouseButton1Click:Connect(function()
     selectedVersion = "free"
     freeBorder.Color = COLORS.Success
@@ -684,8 +724,14 @@ freeButton.MouseButton1Click:Connect(function()
     freeCheck.Text = "✓"
     freeCheck.Visible = true
     
+    -- Deselect ultimate
+    ultimateBorder.Color = COLORS.BorderLight
+    ultimateBorder.Transparency = 0.3
+    ultimateButton.BackgroundColor3 = COLORS.Card
+    ultimateCheck.Visible = false
+    
     loadButton.TextTransparency = 0
-    loaderStatus.Text = "● Free Menu  Selected"
+    loaderStatus.Text = "● Free Menu Selected"
     loaderStatus.TextColor3 = COLORS.Success
 end)
 
@@ -705,96 +751,55 @@ freeButton.MouseLeave:Connect(function()
     end
 end)
 
--- Ultimate Button (Locked)
+-- ================= ULTIMATE BUTTON CLICK =================
 ultimateButton.MouseButton1Click:Connect(function()
-    local originalText = ultimateSub.Text
-    ultimateSub.Text = " Premium only"
-    ultimateSub.TextColor3 = COLORS.Danger
-    
-    TweenService:Create(ultimateButton, TweenInfo.new(0.1), {
-        BackgroundColor3 = Color3.fromRGB(60, 30, 30)
-    }):Play()
-    
-    task.wait(0.3)
-    
-    TweenService:Create(ultimateButton, TweenInfo.new(0.2), {
-        BackgroundColor3 = COLORS.Card
-    }):Play()
-    ultimateSub.Text = originalText
-    ultimateSub.TextColor3 = Color3.fromRGB(120, 80, 80)
+    if keyType == "paid" then
+        selectedVersion = "ultimate"
+        ultimateBorder.Color = COLORS.Gold
+        ultimateBorder.Transparency = 0
+        ultimateButton.BackgroundColor3 = Color3.fromRGB(50, 45, 20)
+        ultimateCheck.Text = "✓"
+        ultimateCheck.Visible = true
+        
+        -- Deselect free
+        freeBorder.Color = COLORS.BorderLight
+        freeBorder.Transparency = 0.3
+        freeButton.BackgroundColor3 = COLORS.Card
+        freeCheck.Visible = false
+        
+        loadButton.TextTransparency = 0
+        loaderStatus.Text = "● Ultimate Menu Selected"
+        loaderStatus.TextColor3 = COLORS.Gold
+    else
+        -- Locked feedback
+        local originalText = ultimateSub.Text
+        ultimateSub.Text = "🔒 Premium only"
+        ultimateSub.TextColor3 = COLORS.Danger
+        
+        TweenService:Create(ultimateButton, TweenInfo.new(0.1), {
+            BackgroundColor3 = Color3.fromRGB(60, 30, 30)
+        }):Play()
+        
+        task.wait(0.3)
+        
+        TweenService:Create(ultimateButton, TweenInfo.new(0.2), {
+            BackgroundColor3 = COLORS.Card
+        }):Play()
+        ultimateSub.Text = originalText
+        ultimateSub.TextColor3 = Color3.fromRGB(120, 80, 80)
+    end
 end)
 
 ultimateButton.MouseEnter:Connect(function()
     TweenService:Create(ultimateButton, TweenInfo.new(0.15), {
-        BackgroundColor3 = Color3.fromRGB(40, 30, 30)
+        BackgroundColor3 = Color3.fromRGB(40, 35, 25)
     }):Play()
 end)
 
 ultimateButton.MouseLeave:Connect(function()
-    TweenService:Create(ultimateButton, TweenInfo.new(0.15), {
-        BackgroundColor3 = COLORS.Card
-    }):Play()
-end)
-
--- ================= LOAD FUNCTION =================
-local function LoadScriptFromURL()
-    local url = "https://raw.githubusercontent.com/anyucika192-eng/SoftwareShitLeak/refs/heads/main/main.lua"
-    
-    loaderStatus.Text = "● Loading script..."
-    loaderStatus.TextColor3 = Color3.fromRGB(255, 200, 50)
-    loadButton.Text = "⏳ LOADING"
-    loadButton.TextTransparency = 0
-    
-    local success, result = pcall(function()
-        return game:HttpGet(url)
-    end)
-    
-    if success and result then
-        loaderStatus.Text = "● Script Loaded!"
-        loaderStatus.TextColor3 = COLORS.Success
-        loadButton.Text = "✓ LOADED"
-        
-        local func, err = loadstring(result)
-        if func then
-            task.spawn(function()
-                func()
-            end)
-        else
-            loaderStatus.Text = "● Error"
-            loaderStatus.TextColor3 = COLORS.Danger
-            loadButton.Text = "✕ ERROR"
-        end
-    else
-        loaderStatus.Text = "● Failed to load"
-        loaderStatus.TextColor3 = COLORS.Danger
-        loadButton.Text = "✕ FAILED"
-    end
-end
-
--- ================= LOAD BUTTON ACTION =================
-loadButton.MouseButton1Click:Connect(function()
-    if selectedVersion == "free" then
-        TweenService:Create(loaderWindow, TweenInfo.new(0.3), {
-            Size = UDim2.new(0, 0, 0, 0),
-            Position = UDim2.new(0.5, 0, 0.5, 0)
-        }):Play()
-        
-        task.wait(0.3)
-        loaderWindow.Visible = false
-        
-        LoadScriptFromURL()
-    else
-        -- Shake animation
-        TweenService:Create(loadButton, TweenInfo.new(0.05), {
-            Position = UDim2.new(0, 10, 0, 0)
-        }):Play()
-        task.wait(0.05)
-        TweenService:Create(loadButton, TweenInfo.new(0.05), {
-            Position = UDim2.new(0, -10, 0, 0)
-        }):Play()
-        task.wait(0.05)
-        TweenService:Create(loadButton, TweenInfo.new(0.05), {
-            Position = UDim2.new(0, 0, 0, 0)
+    if selectedVersion ~= "ultimate" then
+        TweenService:Create(ultimateButton, TweenInfo.new(0.15), {
+            BackgroundColor3 = COLORS.Card
         }):Play()
     end
 end)
@@ -819,8 +824,11 @@ end)
 -- Unlock Button
 keyUnlockBtn.MouseButton1Click:Connect(function()
     local inputKey = keyInput.Text
-    if ValidateKey(inputKey) then
+    local valid, key = ValidateKey(inputKey)
+    
+    if valid then
         keyError.Visible = false
+        keyType = key
         
         TweenService:Create(keyWindow, TweenInfo.new(0.3), {
             Size = UDim2.new(0, 0, 0, 0),
@@ -829,6 +837,23 @@ keyUnlockBtn.MouseButton1Click:Connect(function()
         
         task.wait(0.3)
         keyWindow.Visible = false
+        
+        -- Update loader based on key
+        if keyType == "free" then
+            keyStatusText.Text = "Free Key"
+            keyStatusText.TextColor3 = COLORS.Accent
+            ultimateButton.Visible = false
+            freeButton.Position = UDim2.new(0, 0, 0, 178)
+            loaderStatus.Text = "● Free Mode"
+            loaderStatus.TextColor3 = COLORS.TextMuted
+        else -- "paid"
+            keyStatusText.Text = "Paid Key"
+            keyStatusText.TextColor3 = COLORS.Gold
+            ultimateButton.Visible = true
+            freeButton.Position = UDim2.new(0, 0, 0, 178)
+            loaderStatus.Text = "● Premium Mode"
+            loaderStatus.TextColor3 = COLORS.Gold
+        end
         
         loaderWindow.Visible = true
         loaderWindow.Size = UDim2.new(0, 0, 0, 0)
@@ -839,7 +864,7 @@ keyUnlockBtn.MouseButton1Click:Connect(function()
             Position = UDim2.new(0.5, -320, 0.5, -190)
         }):Play()
     else
-        ShowKeyError("Invalid key! Please try again.")
+        ShowKeyError("Invalid key! Try 'free' or 'paid'.")
     end
 end)
 
