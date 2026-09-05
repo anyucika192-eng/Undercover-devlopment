@@ -230,8 +230,8 @@ local function ValidateKey(inputKey)
     local lower = inputKey:lower()
     if lower == "free" then
         return true, "free"
-    elseif lower == "paid" then
-        return true, "paid"
+    elseif lower == "550E8400-E29B-41D4-A716-446655440000" then
+        return true, "550E8400-E29B-41D4-A716-446655440000"
     end
     return false, nil
 end
@@ -753,7 +753,7 @@ end)
 
 -- ================= ULTIMATE BUTTON CLICK =================
 ultimateButton.MouseButton1Click:Connect(function()
-    if keyType == "paid" then
+    if keyType == "550E8400-E29B-41D4-A716-446655440000" then
         selectedVersion = "ultimate"
         ultimateBorder.Color = COLORS.Gold
         ultimateBorder.Transparency = 0
@@ -864,7 +864,7 @@ keyUnlockBtn.MouseButton1Click:Connect(function()
             Position = UDim2.new(0.5, -320, 0.5, -190)
         }):Play()
     else
-        ShowKeyError("Invalid key! Try 'free' or 'paid'.")
+        ShowKeyError("Invalid key!")
     end
 end)
 
