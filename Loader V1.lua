@@ -226,11 +226,18 @@ end)
 -- ================= KEY VALIDATION =================
 local enteredKey = nil
 
+-- PAID KEY DEFINITION
+local PAID_KEY = "550E8400-E29B-41D4-A716-446655440000"
+
 local function ValidateKey(inputKey)
-    local lower = inputKey:lower()
-    if lower == "free" then
+    -- Trim whitespace and normalize
+    local trimmedKey = inputKey:gsub("^%s+", ""):gsub("%s+$", "")
+    
+    -- Check for free key (case insensitive)
+    if trimmedKey:lower() == "free" then
         return true, "free"
-    elseif lower == "paid" then
+    -- Check for paid key (exact match required)
+    elseif trimmedKey == PAID_KEY then
         return true, "paid"
     end
     return false, nil
@@ -864,7 +871,7 @@ keyUnlockBtn.MouseButton1Click:Connect(function()
             Position = UDim2.new(0.5, -320, 0.5, -190)
         }):Play()
     else
-        ShowKeyError("Invalid key!")
+        ShowKeyError("Invalid key! Use 'free' or the paid key.")
     end
 end)
 
