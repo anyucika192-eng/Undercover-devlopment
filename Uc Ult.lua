@@ -1,5 +1,6 @@
 --==================================================
--- Project Undercover Build20250205 - UI REFINED
+-- Project Undercover Build20250205 - PREMIUM VERSION
+-- .gg/SoftwareShopz
 --==================================================
 
 -- SERVICES
@@ -31,7 +32,7 @@ local Character, Humanoid, HRP
 local function getChar()
     if LocalPlayer.Character then
         Character = LocalPlayer.Character
-        task.wait(0.1)
+        task.wait(0.05)
         Humanoid = Character:FindFirstChildWhichIsA("Humanoid")
         HRP = Character:FindFirstChild("HumanoidRootPart")
     end
@@ -39,9 +40,9 @@ end
 
 LocalPlayer.CharacterAdded:Connect(function(char)
     Character = char
-    task.wait(0.5)
-    Humanoid = char:WaitForChild("Humanoid", 5)
-    HRP = char:WaitForChild("HumanoidRootPart", 5)
+    task.wait(0.2)
+    Humanoid = char:WaitForChild("Humanoid", 3)
+    HRP = char:WaitForChild("HumanoidRootPart", 3)
 end)
 
 getChar()
@@ -130,7 +131,6 @@ local Configuration = {
     HighlightESP = false,
     HeadCircle = false,
     ESPThickness = 2,
-    ESPOpacity = 0.8,
     ESPColour = Color3.fromRGB(44, 62, 80),
     RainbowVisuals = false,
     RainbowDelay = 5,
@@ -172,7 +172,7 @@ gui.ResetOnSpawn = false
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.Enabled = false
 
--- ================= LOADING SCREEN =================
+-- ================= LOADING SCREEN (FAST) =================
 local loadingGui = Instance.new("ScreenGui", game.CoreGui)
 loadingGui.Name = "LoadingScreen"
 loadingGui.ResetOnSpawn = false
@@ -199,7 +199,7 @@ local loadingLogo = Instance.new("TextLabel", loadingCenter)
 loadingLogo.Size = UDim2.new(1, 0, 0, 40)
 loadingLogo.Position = UDim2.new(0, 0, 0, 20)
 loadingLogo.BackgroundTransparency = 1
-loadingLogo.Text = "UNDERCOVER"
+loadingLogo.Text = "UNDERCOVER PREMIUM"
 loadingLogo.Font = Enum.Font.GothamBold
 loadingLogo.TextSize = 28
 loadingLogo.TextColor3 = Color3.fromRGB(250, 250, 250)
@@ -209,11 +209,29 @@ local loadingSub = Instance.new("TextLabel", loadingCenter)
 loadingSub.Size = UDim2.new(1, 0, 0, 20)
 loadingSub.Position = UDim2.new(0, 0, 0, 62)
 loadingSub.BackgroundTransparency = 1
-loadingSub.Text = "Bypassing Anti-Cheat Protection..."
+loadingSub.Text = "Loading"
 loadingSub.Font = Enum.Font.Gotham
 loadingSub.TextSize = 12
 loadingSub.TextColor3 = Color3.fromRGB(161, 161, 170)
 loadingSub.TextXAlignment = Enum.TextXAlignment.Center
+
+-- Animated dots for loading
+local dotTimer = 0
+local dotCount = 0
+local loadingTextBase = "Loading"
+
+task.spawn(function()
+    while loadingGui.Enabled do
+        dotTimer = dotTimer + 0.3
+        if dotTimer >= 0.5 then
+            dotTimer = 0
+            dotCount = (dotCount % 3) + 1
+            local dots = string.rep(".", dotCount)
+            loadingSub.Text = loadingTextBase .. dots
+        end
+        task.wait(0.1)
+    end
+end)
 
 local loadingBarBg = Instance.new("Frame", loadingCenter)
 loadingBarBg.Size = UDim2.new(0.8, 0, 0, 8)
@@ -240,44 +258,26 @@ loadingText.TextSize = 14
 loadingText.TextColor3 = Color3.fromRGB(44, 62, 80)
 loadingText.TextXAlignment = Enum.TextXAlignment.Center
 
-local acStages = {
-    "Initializing memory scanner...",
-    "Scanning for debuggers...",
-    "Bypassing kernel hooks...",
-    "Spoofing hardware IDs...",
-    "Injecting protection bypass...",
-    "Verifying integrity...",
-    "Loading drivers...",
-    "Finalizing injection...",
-    "Starting cheat..."
-}
-
+-- FAST LOADING - Only 15 steps instead of 100
 local function ShowLoadingScreen()
-    local loadTime = math.random(30, 45) / 10
-    local steps = 100
+    local steps = 15
     local currentStep = 0
-    local stageIndex = 1
     
     while currentStep < steps do
-        local jump = math.random(1, 4)
+        local jump = math.random(1, 3)
         currentStep = math.min(currentStep + jump, steps)
         
         loadingBarFill.Size = UDim2.new(currentStep / steps, 0, 1, 0)
-        loadingText.Text = math.floor(currentStep) .. "%"
+        loadingText.Text = math.floor((currentStep / steps) * 100) .. "%"
         
-        if currentStep > (stageIndex / #acStages) * steps and stageIndex <= #acStages then
-            loadingSub.Text = acStages[stageIndex]
-            stageIndex = stageIndex + 1
-        end
-        
-        local delay = math.random(3, 15) / 100
+        local delay = math.random(1, 5) / 100
         task.wait(delay)
     end
     
     loadingBarFill.Size = UDim2.new(1, 0, 1, 0)
     loadingText.Text = "100%"
-    loadingSub.Text = "Bypass Complete! Loading..."
-    task.wait(0.3)
+    loadingSub.Text = "Loading Complete!"
+    task.wait(0.15)
     
     loadingGui.Enabled = false
     gui.Enabled = true
@@ -285,7 +285,7 @@ end
 
 task.spawn(ShowLoadingScreen)
 
--- Color scheme (refined to match the picture)
+-- Color scheme (refined premium look)
 local COLORS = {
     Background = Color3.fromRGB(14, 14, 18),
     Sidebar = Color3.fromRGB(11, 11, 14),
@@ -308,6 +308,7 @@ local COLORS = {
     TabActive = Color3.fromRGB(23, 23, 28),
     TabInactive = Color3.fromRGB(11, 11, 14),
     Section = Color3.fromRGB(44, 62, 80),
+    PremiumGold = Color3.fromRGB(255, 215, 0),
 }
 
 -- 16:9 ratio
@@ -319,7 +320,7 @@ local PREVIEW_WIDTH = 200
 local PREVIEW_GAP = 12
 
 -- Animation settings
-local ANIM_SPEED = 0.3
+local ANIM_SPEED = 0.25
 local ANIM_EASING = Enum.EasingStyle.Quad
 local ANIM_DIRECTION = Enum.EasingDirection.Out
 
@@ -372,10 +373,25 @@ titleLine.BackgroundColor3 = COLORS.Border
 titleLine.BorderSizePixel = 0
 titleLine.BackgroundTransparency = 0.3
 
+-- .gg/SoftwareShopz - TOP LEFT
+local shopText = Instance.new("TextLabel", titleBar)
+shopText.Size = UDim2.new(0, 150, 1, 0)
+shopText.Position = UDim2.new(0, 10, 0, 0)
+shopText.BackgroundTransparency = 1
+shopText.Text = ".gg/SoftwareShopz"
+shopText.Font = Enum.Font.Gotham
+shopText.TextSize = 10
+shopText.TextColor3 = COLORS.PremiumGold
+shopText.TextXAlignment = Enum.TextXAlignment.Left
+shopText.TextYAlignment = Enum.TextYAlignment.Center
+shopText.TextTransparency = 0.6
+
+-- Title text - "UNDERCOVER ULTIMATE"
 local titleText = Instance.new("TextLabel", titleBar)
 titleText.Size = UDim2.new(1, 0, 1, 0)
+titleText.Position = UDim2.new(0, 0, 0, 0)
 titleText.BackgroundTransparency = 1
-titleText.Text = "UNDERCOVER SLOTTED"
+titleText.Text = "UNDERCOVER ULTIMATE"
 titleText.Font = Enum.Font.GothamBold
 titleText.TextSize = 13
 titleText.TextColor3 = COLORS.Text
@@ -385,11 +401,26 @@ titleText.TextTransparency = 0.7
 
 local accentDot = Instance.new("Frame", titleBar)
 accentDot.Size = UDim2.new(0, 6, 0, 6)
-accentDot.Position = UDim2.new(0.5, 65, 0.5, -3)
+accentDot.Position = UDim2.new(0.5, 80, 0.5, -2.5)
 accentDot.BackgroundColor3 = COLORS.Accent
 accentDot.BorderSizePixel = 0
 local dotCorner = Instance.new("UICorner", accentDot)
 dotCorner.CornerRadius = UDim.new(1, 0)
+
+-- Premium badge on title bar (right side)
+local premiumBadge = Instance.new("TextLabel", titleBar)
+premiumBadge.Size = UDim2.new(0, 70, 0, 18)
+premiumBadge.Position = UDim2.new(1, -80, 0.5, -9)
+premiumBadge.BackgroundColor3 = Color3.fromRGB(44, 62, 80)
+premiumBadge.BackgroundTransparency = 0.3
+premiumBadge.BorderSizePixel = 0
+premiumBadge.Text = "PREMIUM"
+premiumBadge.Font = Enum.Font.GothamBold
+premiumBadge.TextSize = 8
+premiumBadge.TextColor3 = COLORS.PremiumGold
+premiumBadge.TextXAlignment = Enum.TextXAlignment.Center
+local badgeCorner = Instance.new("UICorner", premiumBadge)
+badgeCorner.CornerRadius = UDim.new(0, 4)
 
 -- Left sidebar
 local sidebar = Instance.new("Frame", mainFrame)
@@ -424,19 +455,19 @@ local versionText = Instance.new("TextLabel", logoArea)
 versionText.Size = UDim2.new(1, 0, 0, 14)
 versionText.Position = UDim2.new(0, 0, 1, -14)
 versionText.BackgroundTransparency = 1
-versionText.Text = "v2.05"
+versionText.Text = "v1.2"
 versionText.Font = Enum.Font.Gotham
 versionText.TextSize = 9
-versionText.TextColor3 = COLORS.TextMuted
+versionText.TextColor3 = COLORS.PremiumGold
 versionText.TextXAlignment = Enum.TextXAlignment.Center
 
 -- Tab buttons
 local tabs = {}
 local tabData = {
-    {name = "Aimbot", icon = "🎯"},
-    {name = "Rage", icon = "⚡"},
-    {name = "Visuals", icon = "👁"},
-    {name = "Settings", icon = "⚙"}
+    {name = "Aimbot", icon = ""},
+    {name = "Rage", icon = ""},
+    {name = "Visuals", icon = ""},
+    {name = "Settings", icon = ""}
 }
 
 local TAB_HEIGHT = 36
@@ -475,15 +506,15 @@ for i, data in ipairs(tabData) do
     tabIcon.Name = "Icon"
     
     local tabLabel = Instance.new("TextLabel", tab)
-    tabLabel.Size = UDim2.new(0, 60, 1, 0)
-    tabLabel.Position = UDim2.new(0, 38, 0, 0)
-    tabLabel.BackgroundTransparency = 1
-    tabLabel.Text = data.name
-    tabLabel.Font = Enum.Font.Gotham
-    tabLabel.TextSize = 11
-    tabLabel.TextColor3 = i == 1 and COLORS.Text or COLORS.TextSecondary
-    tabLabel.TextXAlignment = Enum.TextXAlignment.Left
-    tabLabel.Name = "Label"
+tabLabel.Size = UDim2.new(1, -60, 1, 1)
+tabLabel.Position = UDim2.new(0, 38, 0, 0)
+tabLabel.BackgroundTransparency = 1
+tabLabel.Text = data.name
+tabLabel.Font = Enum.Font.GothamBold
+tabLabel.TextSize = 13
+tabLabel.TextColor3 = i == 1 and COLORS.Text or COLORS.TextSecondary
+tabLabel.TextXAlignment = Enum.TextXAlignment.Left
+tabLabel.Name = "Label"
     
     tab.MouseEnter:Connect(function()
         if tabs[data.name] ~= tab then return end
@@ -546,10 +577,10 @@ local statusLabel = Instance.new("TextLabel", profileArea)
 statusLabel.Size = UDim2.new(1, -52, 0, 14)
 statusLabel.Position = UDim2.new(0, 46, 0, 28)
 statusLabel.BackgroundTransparency = 1
-statusLabel.Text = "● Connected"
+statusLabel.Text = "● Premium"
 statusLabel.Font = Enum.Font.Gotham
 statusLabel.TextSize = 9
-statusLabel.TextColor3 = COLORS.Success
+statusLabel.TextColor3 = COLORS.PremiumGold
 statusLabel.TextXAlignment = Enum.TextXAlignment.Left
 
 local function updateAvatar()
@@ -567,7 +598,7 @@ LocalPlayer:GetPropertyChangedSignal("Name"):Connect(function()
 end)
 
 LocalPlayer.CharacterAdded:Connect(function()
-    task.wait(0.5)
+    task.wait(0.3)
     updateAvatar()
 end)
 
@@ -661,7 +692,7 @@ local previewIcon = Instance.new("TextLabel", previewTitleBar)
 previewIcon.Size = UDim2.new(0, 18, 0, 18)
 previewIcon.Position = UDim2.new(0, 10, 0.5, -9)
 previewIcon.BackgroundTransparency = 1
-previewIcon.Text = "👁"
+previewIcon.Text = ""
 previewIcon.Font = Enum.Font.Gotham
 previewIcon.TextSize = 13
 previewIcon.TextColor3 = COLORS.Accent
@@ -670,7 +701,7 @@ local previewTitle = Instance.new("TextLabel", previewTitleBar)
 previewTitle.Size = UDim2.new(1, -40, 1, 0)
 previewTitle.Position = UDim2.new(0, 34, 0, 0)
 previewTitle.BackgroundTransparency = 1
-previewTitle.Text = "ESP Preview"
+previewTitle.Text = "          ESP Preview"
 previewTitle.Font = Enum.Font.GothamBold
 previewTitle.TextSize = 12
 previewTitle.TextColor3 = COLORS.Text
@@ -867,12 +898,12 @@ task.spawn(function()
     mainContainer.Position = UDim2.new(0.5, 0, 0.5, 0)
     previewWindow.Size = UDim2.new(0, 0, 0, 0)
     previewWindow.Position = UDim2.new(0.5, BASE_WIDTH/2 + PREVIEW_GAP + PREVIEW_WIDTH/2, 0.5, 0)
-    task.wait(0.1)
+    task.wait(0.05)
     ToggleMenu(true)
     TogglePreview(true)
 end)
 
--- ================= UI COMPONENTS (Refined) =================
+-- ================= UI COMPONENTS (Refined Premium) =================
 local function addSection(text)
     local section = Instance.new("Frame", contentScroll)
     section.Size = UDim2.new(1, 0, 0, 24)
@@ -972,6 +1003,8 @@ local function addToggle(text, default, callback)
     return card
 end
 
+-- ================= FIXED SLIDER =================
+-- The slider now works without moving the menu
 local function addSlider(text, min, max, default, callback, suffix)
     local card = Instance.new("Frame", contentScroll)
     card.Size = UDim2.new(1, 0, 0, 48)
@@ -1014,6 +1047,7 @@ local function addSlider(text, min, max, default, callback, suffix)
     sliderTrack.Position = UDim2.new(0, 12, 0, 28)
     sliderTrack.BackgroundColor3 = COLORS.SliderTrack
     sliderTrack.BorderSizePixel = 0
+    sliderTrack.Active = true
     local trackCorner = Instance.new("UICorner", sliderTrack)
     trackCorner.CornerRadius = UDim.new(1, 0)
     
@@ -1043,10 +1077,12 @@ local function addSlider(text, min, max, default, callback, suffix)
         valueLabel.Text = tostring(math.floor(clamped)) .. (suffix or "")
     end
     
+    -- Mouse down on track - start dragging
     sliderTrack.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 then
             dragging = true
             sliderKnob.Visible = true
+            -- Calculate position based on mouse
             local mousePos = UIS:GetMouseLocation()
             local relativeX = math.clamp((mousePos.X - sliderTrack.AbsolutePosition.X) / sliderTrack.AbsoluteSize.X, 0, 1)
             local value = min + (relativeX * (max - min))
@@ -1055,22 +1091,31 @@ local function addSlider(text, min, max, default, callback, suffix)
         end
     end)
     
+    -- Mouse enter/leave for knob visibility
     sliderTrack.MouseEnter:Connect(function()
-        sliderKnob.Visible = true
+        if not dragging then
+            sliderKnob.Visible = true
+        end
     end)
     
     sliderTrack.MouseLeave:Connect(function()
-        if not dragging then sliderKnob.Visible = false end
-    end)
-    
-    UIS.InputEnded:Connect(function(input)
-        if input.UserInputType == Enum.UserInputType.MouseButton1 and dragging then
-            dragging = false
+        if not dragging then
             sliderKnob.Visible = false
         end
     end)
     
-    UIS.InputChanged:Connect(function(input)
+    -- Mouse up - stop dragging
+    local function onInputEnded(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 and dragging then
+            dragging = false
+            sliderKnob.Visible = false
+        end
+    end
+    
+    UIS.InputEnded:Connect(onInputEnded)
+    
+    -- Mouse move - update slider if dragging
+    local function onInputChanged(input)
         if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
             local mousePos = UIS:GetMouseLocation()
             local relativeX = math.clamp((mousePos.X - sliderTrack.AbsolutePosition.X) / sliderTrack.AbsoluteSize.X, 0, 1)
@@ -1078,7 +1123,9 @@ local function addSlider(text, min, max, default, callback, suffix)
             updateSlider(value)
             callback(math.floor(value))
         end
-    end)
+    end
+    
+    UIS.InputChanged:Connect(onInputChanged)
     
     return card
 end
@@ -1262,7 +1309,7 @@ local function switchTab(tabName)
     
     local subtitles = {
         Aimbot = "Configure aimbot, silent aim & triggerbot",
-        Rage = "Rage settings (coming soon)",
+        Rage = "Rage settings",
         Visuals = "Customize ESP and visual settings",
         Settings = "Application preferences & about"
     }
@@ -1312,6 +1359,16 @@ local function switchTab(tabName)
         addElement(addToggle("Mouse Smoothing", Configuration.UseSensitivity, function(v) Configuration.UseSensitivity = v end))
         addElement(addSlider("Smoothness", 10, 100, Configuration.Sensitivity, function(v) Configuration.Sensitivity = v end, "%"))
         
+        addElement(addSection("Offset Settings"))
+        addElement(addToggle("Use Offset", Configuration.UseOffset, function(v) Configuration.UseOffset = v end))
+        addElement(addSlider("Static Offset", 0, 50, Configuration.StaticOffsetIncrement, function(v) Configuration.StaticOffsetIncrement = v end))
+        addElement(addToggle("Auto Offset", Configuration.AutoOffset, function(v) Configuration.AutoOffset = v end))
+        addElement(addSlider("Max Auto Offset", 10, 100, Configuration.MaxAutoOffset, function(v) Configuration.MaxAutoOffset = v end))
+        
+        addElement(addSection("Noise Settings"))
+        addElement(addToggle("Use Noise", Configuration.UseNoise, function(v) Configuration.UseNoise = v end))
+        addElement(addSlider("Noise Frequency", 0, 100, Configuration.NoiseFrequency, function(v) Configuration.NoiseFrequency = v end))
+        
         addElement(addSection("Silent Aim"))
         addElement(addToggle("Enable Silent Aim", Configuration.SilentAim, function(v) Configuration.SilentAim = v end))
         addElement(addToggle("Always On (No Key)", Configuration.AlwaysOnSilent, function(v) Configuration.AlwaysOnSilent = v end))
@@ -1355,25 +1412,29 @@ local function switchTab(tabName)
         addElement(addToggle("Wall Check", Configuration.WallCheck, function(v) Configuration.WallCheck = v end))
         addElement(addToggle("Friend Check", Configuration.FriendCheck, function(v) Configuration.FriendCheck = v end))
         addElement(addToggle("Off After Kill", Configuration.OffAimbotAfterKill, function(v) Configuration.OffAimbotAfterKill = v end))
+        addElement(addToggle("God Check", Configuration.GodCheck, function(v) Configuration.GodCheck = v end))
+        addElement(addToggle("Follow Check", Configuration.FollowCheck, function(v) Configuration.FollowCheck = v end))
+        addElement(addToggle("Verified Badge Check", Configuration.VerifiedBadgeCheck, function(v) Configuration.VerifiedBadgeCheck = v end))
+        addElement(addToggle("Transparency Check", Configuration.TransparencyCheck, function(v) Configuration.TransparencyCheck = v end))
+        addElement(addSlider("Ignored Transparency", 0, 1, Configuration.IgnoredTransparency, function(v) Configuration.IgnoredTransparency = v end))
         
     elseif tabName == "Rage" then
-        local placeholder = Instance.new("Frame", contentScroll)
-        placeholder.Size = UDim2.new(1, 0, 0, 100)
-        placeholder.BackgroundColor3 = COLORS.Card
-        placeholder.BorderSizePixel = 0
-        local placeholderCorner = Instance.new("UICorner", placeholder)
-        placeholderCorner.CornerRadius = UDim.new(0, 5)
-        addElement(placeholder)
+        addElement(addSection("Rage Settings"))
+        addElement(addToggle("Enable Rage Mode", false, function(v) Configuration.RageMode = v end))
+        addElement(addToggle("Auto Wallbang", false, function(v) Configuration.AutoWallbang = v end))
+        addElement(addToggle("Instant Kill", false, function(v) Configuration.InstantKill = v end))
+        addElement(addSlider("Rage FOV", 10, 360, 180, function(v) Configuration.RageFOV = v end))
+        addElement(addSlider("Hit Chance", 1, 100, 80, function(v) Configuration.HitChance = v end, "%"))
         
-        local comingSoon = Instance.new("TextLabel", placeholder)
-        comingSoon.Size = UDim2.new(1, 0, 1, 0)
-        comingSoon.BackgroundTransparency = 1
-        comingSoon.Text = "🔥 RAGE MODE\nComing Soon..."
-        comingSoon.Font = Enum.Font.GothamBold
-        comingSoon.TextSize = 18
-        comingSoon.TextColor3 = COLORS.Accent
-        comingSoon.TextXAlignment = Enum.TextXAlignment.Center
-        comingSoon.TextYAlignment = Enum.TextYAlignment.Center
+        addElement(addSection("SpinBot"))
+        addElement(addToggle("Enable SpinBot", Configuration.SpinBot, function(v) Configuration.SpinBot = v end))
+        addElement(addSlider("Spin Velocity", 10, 100, Configuration.SpinBotVelocity, function(v) Configuration.SpinBotVelocity = v end))
+        addElement(addDropdown("Spin Part", {"HumanoidRootPart", "Head", "UpperTorso"}, 1, function(opt) Configuration.SpinPart = opt end))
+        
+        addElement(addSection("Anti-Aim"))
+        addElement(addToggle("Enable Anti-Aim", false, function(v) Configuration.AntiAim = v end))
+        addElement(addDropdown("Anti-Aim Mode", {"Jitter", "Spin", "Static", "Random"}, 1, function(opt) Configuration.AntiAimMode = opt end))
+        addElement(addSlider("Anti-Aim Angle", 0, 180, 90, function(v) Configuration.AntiAimAngle = v end))
         
     elseif tabName == "Visuals" then
         addElement(addSection("ESP Settings"))
@@ -1414,6 +1475,8 @@ local function switchTab(tabName)
         end))
         addElement(addToggle("Rainbow ESP", Configuration.RainbowVisuals, function(v) Configuration.RainbowVisuals = v end))
         addElement(addSlider("Rainbow Speed", 1, 10, Configuration.RainbowDelay, function(v) Configuration.RainbowDelay = v end))
+        addElement(addSlider("ESP Thickness", 1, 5, Configuration.ESPThickness, function(v) Configuration.ESPThickness = v end))
+        addElement(addToggle("Filled Box", Configuration.ESPBoxFilled, function(v) Configuration.ESPBoxFilled = v end))
         
     elseif tabName == "Settings" then
         addElement(addSection("UI Settings"))
@@ -1421,7 +1484,7 @@ local function switchTab(tabName)
         
         addElement(addSection("About"))
         local aboutCard = Instance.new("Frame", contentScroll)
-        aboutCard.Size = UDim2.new(1, 0, 0, 56)
+        aboutCard.Size = UDim2.new(1, 0, 0, 60)
         aboutCard.BackgroundColor3 = COLORS.Card
         aboutCard.BorderSizePixel = 0
         local aboutCorner = Instance.new("UICorner", aboutCard)
@@ -1430,21 +1493,31 @@ local function switchTab(tabName)
         
         local aboutTitle = Instance.new("TextLabel", aboutCard)
         aboutTitle.Size = UDim2.new(1, -20, 0, 22)
-        aboutTitle.Position = UDim2.new(0, 10, 0, 10)
+        aboutTitle.Position = UDim2.new(0, 10, 0, 8)
         aboutTitle.BackgroundTransparency = 1
-        aboutTitle.Text = "Undercover Slotted"
+        aboutTitle.Text = "Undercover Ultimate Premium"
         aboutTitle.Font = Enum.Font.GothamBold
         aboutTitle.TextSize = 14
         aboutTitle.TextColor3 = COLORS.Text
         
         local aboutInfo = Instance.new("TextLabel", aboutCard)
         aboutInfo.Size = UDim2.new(1, -20, 0, 16)
-        aboutInfo.Position = UDim2.new(0, 10, 0, 34)
+        aboutInfo.Position = UDim2.new(0, 10, 0, 32)
         aboutInfo.BackgroundTransparency = 1
-        aboutInfo.Text = "Build beta0212  •  Made by Grandma"
+        aboutInfo.Text = "Premium Version v1.2  •  .gg/SoftwareShopz"
         aboutInfo.Font = Enum.Font.Gotham
         aboutInfo.TextSize = 10
-        aboutInfo.TextColor3 = COLORS.TextMuted
+        aboutInfo.TextColor3 = COLORS.PremiumGold
+        
+        local aboutDiscord = Instance.new("TextLabel", aboutCard)
+        aboutDiscord.Size = UDim2.new(1, -20, 0, 16)
+        aboutDiscord.Position = UDim2.new(0, 10, 0, 48)
+        aboutDiscord.BackgroundTransparency = 1
+        aboutDiscord.Text = "All features unlocked - Premium Activated"
+        aboutDiscord.Font = Enum.Font.Gotham
+        aboutDiscord.TextSize = 10
+        aboutDiscord.TextColor3 = COLORS.Success
+        aboutDiscord.TextXAlignment = Enum.TextXAlignment.Left
     end
     
     contentScroll.CanvasSize = UDim2.new(0, 0, 0, contentLayout.AbsoluteContentSize.Y + 20)
@@ -1462,7 +1535,7 @@ contentLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
     contentScroll.CanvasSize = UDim2.new(0, 0, 0, contentLayout.AbsoluteContentSize.Y + 20)
 end)
 
--- ================= FIXED ISREADY FUNCTION =================
+-- ================= ISREADY FUNCTION =================
 local function IsReady(TargetChar)
     if not TargetChar or not TargetChar:IsA("Model") then return false end    
     local Humanoid = TargetChar:FindFirstChildWhichIsA("Humanoid")
@@ -1540,7 +1613,6 @@ local function IsValidSilentTarget(player)
     return true
 end
 
--- NEW: Function to draw cornered box ESP
 local function DrawCorneredBox(boxPos, boxSize, color, thickness, transparency, cornerLength)
     local tl = boxPos
     local tr = Vector2.new(boxPos.X + boxSize.X, boxPos.Y)
@@ -1806,12 +1878,12 @@ RunService.RenderStepped:Connect(function(dt)
             pBox.Position = boxPos
             pBox.Color = Configuration.ESPColour
             pBox.Thickness = Configuration.ESPThickness
-            pBox.Transparency = Configuration.ESPOpacity
+            pBox.Transparency = 0.8
             pBox.Filled = Configuration.ESPBoxFilled
         end
         
         if Configuration.CorneredBox then
-            updateCorneredBox(boxPos, Vector2.new(boxWidth, boxHeight), Configuration.ESPColour, Configuration.ESPThickness, Configuration.ESPOpacity, Configuration.CornerLength)
+            updateCorneredBox(boxPos, Vector2.new(boxWidth, boxHeight), Configuration.ESPColour, Configuration.ESPThickness, 0.8, Configuration.CornerLength)
         else
             for i = 1, 8 do
                 pCorneredBoxLines[i].Visible = false
@@ -1850,7 +1922,7 @@ RunService.RenderStepped:Connect(function(dt)
             pHeadCircle.Radius = 12
             pHeadCircle.Color = Configuration.ESPColour
             pHeadCircle.Thickness = Configuration.ESPThickness
-            pHeadCircle.Transparency = Configuration.ESPOpacity
+            pHeadCircle.Transparency = 0.8
             pHeadCircle.Filled = false
         end
         
@@ -1861,7 +1933,7 @@ RunService.RenderStepped:Connect(function(dt)
                 pSkeleton[i].To = center + skeletonPreviewPoints[i][2] * 0.65
                 pSkeleton[i].Color = Configuration.ESPColour
                 pSkeleton[i].Thickness = Configuration.ESPThickness
-                pSkeleton[i].Transparency = Configuration.ESPOpacity
+                pSkeleton[i].Transparency = 0.8
             end
         else
             for i = 1, #pSkeleton do pSkeleton[i].Visible = false end
@@ -1894,10 +1966,10 @@ RunService.RenderStepped:Connect(function(dt)
             
             if Configuration.HighlightESP then
                 if not Highlights[plr] or not Highlights[plr].Parent then
-                    Highlights[plr] = CreateHighlight(char, Configuration.ESPColour, Configuration.ESPOpacity)
+                    Highlights[plr] = CreateHighlight(char, Configuration.ESPColour, 0.8)
                 else
                     Highlights[plr].FillColor = Configuration.ESPColour
-                    Highlights[plr].FillTransparency = Configuration.ESPOpacity
+                    Highlights[plr].FillTransparency = 0.8
                 end
             elseif Highlights[plr] and Highlights[plr].Parent then
                 Highlights[plr]:Destroy(); Highlights[plr] = nil
@@ -1923,7 +1995,7 @@ RunService.RenderStepped:Connect(function(dt)
                         esp.Box.Position = topLeft
                         esp.Box.Color = Configuration.ESPColour
                         esp.Box.Thickness = Configuration.ESPThickness
-                        esp.Box.Transparency = Configuration.ESPOpacity
+                        esp.Box.Transparency = 0.8
                         esp.Box.Filled = Configuration.ESPBoxFilled
                     end
                     
@@ -1931,7 +2003,7 @@ RunService.RenderStepped:Connect(function(dt)
                         if CorneredBoxLines[plr] then
                             for _, l in ipairs(CorneredBoxLines[plr]) do l:Remove() end
                         end
-                        CorneredBoxLines[plr] = DrawCorneredBox(topLeft, Vector2.new(width, height), Configuration.ESPColour, Configuration.ESPThickness, Configuration.ESPOpacity, Configuration.CornerLength)
+                        CorneredBoxLines[plr] = DrawCorneredBox(topLeft, Vector2.new(width, height), Configuration.ESPColour, Configuration.ESPThickness, 0.8, Configuration.CornerLength)
                     elseif CorneredBoxLines[plr] then
                         for _, l in ipairs(CorneredBoxLines[plr]) do l:Remove() end
                         CorneredBoxLines[plr] = {}
@@ -1943,7 +2015,7 @@ RunService.RenderStepped:Connect(function(dt)
                         esp.Tracer.To = Vector2.new(pos.X, pos.Y)
                         esp.Tracer.Color = Configuration.ESPColour
                         esp.Tracer.Thickness = Configuration.ESPThickness
-                        esp.Tracer.Transparency = Configuration.ESPOpacity
+                        esp.Tracer.Transparency = 0.8
                     end
                     
                     esp.Health.Visible = Configuration.HealthESP
@@ -1966,7 +2038,7 @@ RunService.RenderStepped:Connect(function(dt)
                         esp.Name.Text = plr.Name
                         esp.Name.Color = Configuration.ESPColour
                         esp.Name.Size = 14
-                        esp.Name.Transparency = 1 - Configuration.ESPOpacity
+                        esp.Name.Transparency = 0.2
                         esp.Name.Outline = true
                         esp.Name.OutlineColor = Color3.fromRGB(0, 0, 0)
                         esp.Name.OutlineTransparency = 0.2
@@ -1989,7 +2061,7 @@ RunService.RenderStepped:Connect(function(dt)
                         HeadCircles[plr].Radius = radius
                         HeadCircles[plr].Color = Configuration.ESPColour
                         HeadCircles[plr].Thickness = Configuration.ESPThickness
-                        HeadCircles[plr].Transparency = Configuration.ESPOpacity
+                        HeadCircles[plr].Transparency = 0.8
                         HeadCircles[plr].Filled = false
                     elseif HeadCircles[plr] then
                         HeadCircles[plr].Visible = false
@@ -2000,7 +2072,7 @@ RunService.RenderStepped:Connect(function(dt)
                 
                 if Configuration.SkeletonESP then
                     if SkeletonLines[plr] then for _, l in ipairs(SkeletonLines[plr]) do l:Remove() end end
-                    SkeletonLines[plr] = DrawSkeleton(char, Configuration.ESPColour, Configuration.ESPThickness, Configuration.ESPOpacity)
+                    SkeletonLines[plr] = DrawSkeleton(char, Configuration.ESPColour, Configuration.ESPThickness, 0.8)
                 elseif SkeletonLines[plr] then
                     for _, l in ipairs(SkeletonLines[plr]) do l:Remove() end; SkeletonLines[plr] = {}
                 end
