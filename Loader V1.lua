@@ -552,7 +552,7 @@ local freeSub = Instance.new("TextLabel", freeButton)
 freeSub.Size = UDim2.new(1, -20, 0, 14)
 freeSub.Position = UDim2.new(0, 12, 0, 24)
 freeSub.BackgroundTransparency = 1
-freeSub.Text = "Basic features"
+freeSub.Text = "Updated working"
 freeSub.Font = Enum.Font.Gotham
 freeSub.TextSize = 9
 freeSub.TextColor3 = COLORS.TextMuted
@@ -600,7 +600,7 @@ local ultimateSub = Instance.new("TextLabel", ultimateButton)
 ultimateSub.Size = UDim2.new(1, -20, 0, 14)
 ultimateSub.Position = UDim2.new(0, 12, 0, 24)
 ultimateSub.BackgroundTransparency = 1
-ultimateSub.Text = "Premium"
+ultimateSub.Text = "Updated working"
 ultimateSub.Font = Enum.Font.Gotham
 ultimateSub.TextSize = 9
 ultimateSub.TextColor3 = Color3.fromRGB(120, 80, 80)
@@ -666,17 +666,14 @@ changelogContent.Size = UDim2.new(1, -12, 0, 200)
 changelogContent.Position = UDim2.new(0, 0, 0, 0)
 changelogContent.BackgroundTransparency = 1
 changelogContent.Text = [[
-v2.0
+v0.11
   • Loader UI updated
-  • 100 Premium Keys Added
-  • BotosMertBanVolt has key: 550E8400-E29B-41D4-A716-446655440009
-
-v1.0 - Initial Release
+  • Updating works without changing loadstring for user
+v0.10 - kind of initial release
   • Released Loader for Free and Ultimate
 
-📌 Next Update:
-  • Ultimate Menu Features
-  • More ESP Options
+Next Update:
+  • gon type here things i will do
 ]]
 changelogContent.Font = Enum.Font.Gotham
 changelogContent.TextSize = 10
@@ -897,7 +894,7 @@ ultimateButton.MouseButton1Click:Connect(function()
     else
         -- Locked feedback
         local originalText = ultimateSub.Text
-        ultimateSub.Text = "🔒 Premium only"
+        ultimateSub.Text = "Premium only"
         ultimateSub.TextColor3 = COLORS.Danger
         
         TweenService:Create(ultimateButton, TweenInfo.new(0.1), {
