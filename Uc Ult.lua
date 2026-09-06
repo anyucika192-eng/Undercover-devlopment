@@ -1,6 +1,5 @@
 --==================================================
--- Project Undercover Build20250205 - PREMIUM VERSION
--- .gg/SoftwareShopz
+
 --==================================================
 
 -- SERVICES
@@ -373,12 +372,12 @@ titleLine.BackgroundColor3 = COLORS.Border
 titleLine.BorderSizePixel = 0
 titleLine.BackgroundTransparency = 0.3
 
--- .gg/SoftwareShopz - TOP LEFT
+-- .gg/SoftwareShopz
 local shopText = Instance.new("TextLabel", titleBar)
 shopText.Size = UDim2.new(0, 150, 1, 0)
 shopText.Position = UDim2.new(0, 10, 0, 0)
 shopText.BackgroundTransparency = 1
-shopText.Text = ".gg/SoftwareShopz"
+shopText.Text = ".gg/ sum shi"
 shopText.Font = Enum.Font.Gotham
 shopText.TextSize = 10
 shopText.TextColor3 = COLORS.PremiumGold
